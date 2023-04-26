@@ -1,6 +1,5 @@
 //Select element function
-const selectElement = function (element)
-{
+const selectElement = function (element) {
   return document.querySelector(element)
 }
 
@@ -8,13 +7,11 @@ let menuToggler = selectElement(".menu-toggle"),
   body = selectElement("body"),
   menu = selectElement()
 
-menuToggler.addEventListener("click", function ()
-{
+menuToggler.addEventListener("click", function () {
   body.classList.toggle("open")
 })
 
-body.addEventListener("click", function (event)
-{
+body.addEventListener("click", function (event) {
   if (event.target.parentElement != menuToggler && body.classList.contains("open")) body.classList.toggle("open")
 })
 
@@ -116,12 +113,9 @@ sr.reveal(".rotate-left2",
 
 
 // isOpen function
-function isOpen()
-{
-  class Day
-  {
-    constructor(name, isOpen, openHour, openMinutes, closeHour, closeMinutes)
-    {
+function isOpen() {
+  class Day {
+    constructor(name, isOpen, openHour, openMinutes, closeHour, closeMinutes) {
       this.name = name
       this.isOpen = isOpen
       this.openHour = openHour
@@ -146,49 +140,41 @@ function isOpen()
     now = new Date,
     time = now.getHours() + now.getMinutes() / 100,
     today = openHours[now.getDay()],
-    tomorrow = openHours[now.getDay() + 1],
+    tomorrow = today === 6 ? openHours[0] : openHours[now.getDay() + 1],
     message =
     {
       status: "",
       text: ""
     }
 
-  if (today.isOpen && today.openTime <= time && today.closeTime > time)
-  {
+  if (today.isOpen && today.openTime <= time && today.closeTime > time) {
     message.status = "Nyitva"
     if (today.closeMinutes < 10) today.closeMinutes = "0" + today.closeMinutes
-    message.text = `${today.closeHour}:${today.closeMinutes}-ig`
+    message.text = `${ today.closeHour }:${ today.closeMinutes }-ig`
   }
-  else
-  {
+  else {
     message.status = "Zárva"
     if (tomorrow.openMinutes < 10) tomorrow.openMinutes = "0" + tomorrow.openMinutes
     if (today.openMinutes < 10) today.openMinutes = "0" + today.openMinutes
 
-    if (tomorrow.isOpen)
-    {
-      if (today.closeTime <= time)
-      {
-        message.text = `Holnap ${tomorrow.openHour}:${tomorrow.openMinutes}-kor nyitunk`
+    if (tomorrow.isOpen) {
+      if (today.closeTime <= time) {
+        message.text = `Holnap ${ tomorrow.openHour }:${ tomorrow.openMinutes }-kor nyitunk`
       }
-      else
-      {
-        message.text = `${today.openHour}:${today.openMinutes}-kor nyitunk`
+      else {
+        message.text = `${ today.openHour }:${ today.openMinutes }-kor nyitunk`
       }
     }
-    else
-    {
+    else {
       let newOpenHours = openHours
       newOpenHours.forEach(e => newOpenHours.push(e))
       console.log(newOpenHours)
-      for (let i = 0; true; i++)
-      {
+      for (let i = 0; true; i++) {
         console.log(i)
-        if (newOpenHours[now.getDay() + i].isOpen)
-        {
+        if (newOpenHours[now.getDay() + i].isOpen) {
           if (newOpenHours[now.getDay() + i].openMinutes < 10) newOpenHours[i].openMinutes = "0" + newOpenHours[now.getDay() + i].openMinutes
 
-          message.text = `${newOpenHours[now.getDay() + i].name} ${newOpenHours[now.getDay() + i].openHour}:${newOpenHours[i].openMinutes}-kor nyitunk`
+          message.text = `${ newOpenHours[now.getDay() + i].name } ${ newOpenHours[now.getDay() + i].openHour }:${ newOpenHours[i].openMinutes }-kor nyitunk`
           break
         }
       }
